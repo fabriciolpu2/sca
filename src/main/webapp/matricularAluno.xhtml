@@ -1,0 +1,533 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Aluno</title>
+	<h:outputStylesheet library="css" name="layout.css" />
+	<h:outputScript library="js" name="pt_BR.js" />
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo">
+
+			<f:metadata>
+				<f:viewAction action="#{turmaService.findAll}"></f:viewAction>
+			</f:metadata>
+
+			<h:form id="form" target="_blank">
+				<p:growl id="salvarMsg" sticky="true" showDetail="true" />
+				<!-- 				<p:tabView cache="true" dynamic="true"> -->
+				<p:wizard flowListener="#{alunoService.onFlowProcess}"
+					nextLabel="Próximo" backLabel="Voltar">
+					<p:tab id="aluno" title="Aluno">
+						<p:panel header="Dados do Aluno">
+							<p:panelGrid columns="6" styleClass="panelGrid">
+
+								<p:outputLabel value="Nome:* " />
+								<p:outputLabel value="Sexo: " />
+								<p:outputLabel value="D. Nascimento" />
+								
+								<p:outputLabel value="Naturalidade: " />
+								<p:outputLabel value="UF:" />
+								<p:outputLabel value="Nacionalidade: " />
+
+								<p:inputText value="#{alunoService.aluno.nome}" size="35"
+									maxlength="30" required="true"
+									requiredMessage="Informe o Nome do Aluno" />
+								<p:selectOneMenu value="#{alunoService.aluno.sexo}" label="Sexo">
+									<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+									<f:selectItems value="#{alunoService.sexos}" var="sexo"
+										itemValue="#{sexo}" />
+								</p:selectOneMenu>
+								<p:calendar navigator="true" mask="99/99/9999"
+									pattern="dd/MM/yyyy" size="12"
+									value="#{alunoService.aluno.dataNasc}" locale="pt_BR" />
+								
+								<p:inputText value="#{alunoService.aluno.naturalidade}"
+									size="20" maxlength="30" />
+								<p:selectOneMenu value="#{alunoService.aluno.uf}" label="Siglas">
+									<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+									<f:selectItems value="#{alunoService.siglas}" var="siglas"
+										itemValue="#{siglas}" />
+								</p:selectOneMenu>
+								
+								<p:selectOneMenu value="#{alunoService.aluno.nacionalidade}"
+									editable="true" >
+									<f:selectItem itemLabel="Brasileiro(a)" itemValue="Brasileiro(a)"></f:selectItem>
+									<f:selectItem itemLabel="Estrangeiro(a) Especificar" itemValue="Estrangeiro(a)"></f:selectItem>
+								</p:selectOneMenu>
+							</p:panelGrid>
+
+							<p:panelGrid columns="5" styleClass="panelGrid">
+								<p:outputLabel value="Mãe: " />
+								<p:outputLabel value="CPF:" />
+								<p:outputLabel value="RG:" />
+								<p:outputLabel value="Emissor:" />
+								<p:outputLabel value="UF:" />
+								<p:inputText value="#{alunoService.aluno.mae.nome}" size="35"
+									maxlength="30" />
+								<p:inputMask value="#{alunoService.aluno.mae.cpf}" size="16"
+									mask="999.999.999-99" />
+								<p:inputText value="#{alunoService.aluno.mae.rg}" maxlength="10"
+									size="13" />
+								<p:inputText value="#{alunoService.aluno.mae.rgEmissor}"
+									maxlength="15" size="15" />
+								<p:selectOneMenu value="#{alunoService.aluno.mae.rgUf}"
+									label="Siglas">
+									<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+									<f:selectItems value="#{alunoService.siglas}" var="siglas"
+										itemValue="#{siglas}" />
+								</p:selectOneMenu>
+
+							</p:panelGrid>
+							<p:panelGrid columns="5" styleClass="panelGrid">
+								<p:outputLabel value="Pai: " />
+								<p:outputLabel value="CPF:" />
+								<p:outputLabel value="RG:" />
+								<p:outputLabel value="Emissor:" />
+								<p:outputLabel value="UF:" />
+								<p:inputText value="#{alunoService.aluno.pai.nome}" size="35"
+									maxlength="30" />
+								<p:inputMask value="#{alunoService.aluno.pai.cpf}" size="16"
+									mask="999.999.999-99" />
+								<p:inputText value="#{alunoService.aluno.pai.rg}" maxlength="10"
+									size="13" />
+								<p:inputText value="#{alunoService.aluno.pai.rgEmissor}"
+									maxlength="15" size="15" />
+								<p:selectOneMenu value="#{alunoService.aluno.pai.rgUf}"
+									label="Siglas">
+									<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+									<f:selectItems value="#{alunoService.siglas}" var="siglas"
+										itemValue="#{siglas}" />
+								</p:selectOneMenu>
+							</p:panelGrid>
+							
+							<p:panelGrid columns="3" styleClass="panelGrid">
+								<p:outputLabel value="Renda Familiar:" />
+								<p:outputLabel value="Imaos menores de 18:" />
+								<p:outputLabel value="Mora Com:" />
+
+								<p:inputText value="#{alunoService.aluno.rendaFamiliar}"
+									id="renda" />
+								<p:spinner value="#{alunoService.aluno.numIrmaos}" size="3"
+									min="0" />																								
+								<p:selectOneMenu value="#{alunoService.aluno.moraCom}"
+									editable="true" style="width:250px;">
+									<f:selectItem itemLabel="Pais" itemValue="Pais"></f:selectItem>
+									<f:selectItem itemLabel="Tios" itemValue="Tios"></f:selectItem>
+									<f:selectItem itemLabel="Avós" itemValue="Avós"></f:selectItem>
+									<f:selectItem itemLabel="Outros (Especificar)"
+										itemValue="Outros (Especificar)"></f:selectItem>
+								</p:selectOneMenu>								
+								<p:slider for="renda" maxValue="7000" step="200" />
+							</p:panelGrid>
+							
+							
+							<p:panelGrid columns="4" styleClass="panelGrid">
+								<p:outputLabel value="Possui Convenio:" />
+								<p:selectBooleanButton offLabel="Não" onLabel="Sim"
+									value="#{alunoService.aluno.conveniado}" />
+								<p:outputLabel value="Descrição do Convenio" />
+								<p:inputText value="#{alunoService.aluno.descricaoConvenio}"
+									size="45" maxlength="100" />
+
+								<p:outputLabel value="P. Necessidades Especiais:" />
+								<p:selectBooleanButton offLabel="Não" onLabel="Sim"
+									value="#{alunoService.aluno.pne}" />
+								<p:outputLabel value="Especificar Necessidades Especiais" />
+								<p:inputText value="#{alunoService.aluno.descricaoPne}"
+									size="45" maxlength="100" />
+
+								<p:outputLabel value="Doença" />
+								<p:selectBooleanButton offLabel="Não" onLabel="Sim"
+									value="#{alunoService.aluno.doente}" />
+								<p:outputLabel value="Especificar Doença e Cuidados" />
+								<p:inputText value="#{alunoService.aluno.doencaCuidados}"
+									size="45" maxlength="100" />
+								<p:outputLabel value="Alergia" />
+								<p:selectBooleanButton offLabel="Não" onLabel="Sim"
+									value="#{alunoService.aluno.alergias}" />
+								<p:outputLabel value="Especificar Alimentos/Medicamentos" />
+								<p:inputText value="#{alunoService.aluno.descricaoAlergias}"
+									size="45" maxlength="100" />
+							</p:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="Responsaveis" title="Responsáveis">
+						<p:panel header="Dados dos Responsáveis">
+							<p:messages />
+							<p:panelGrid styleClass="panelGrid">
+
+								<p:outputLabel value="Responsavel pelo aluno: "></p:outputLabel>
+								<p:selectOneMenu id="tipopesquisa" styleClass="input-select"
+									required="true" requiredMessage="Selecione um Responsavel"
+									value="#{alunoService.aluno.responsavel.grauParentesco}">
+									<f:selectItem itemLabel=" -- Selecione --" itemValue="" />
+									<f:selectItem itemLabel=" Mãe " itemValue="1" />
+									<f:selectItem itemLabel=" Pai" itemValue="2" />
+									<f:selectItem itemLabel=" Outro" itemValue="3" />
+									<f:ajax render="responsavel"></f:ajax>
+								</p:selectOneMenu>
+
+								<h:panelGroup id="responsavel">
+									<p:panelGrid columns="6" styleClass="panelGrid"
+										rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}">
+										<p:outputLabel value="Nome Mãe:* " />
+										<p:outputLabel value="CPF:*" />
+										<p:outputLabel value="RG: " />
+										<p:outputLabel value="Emissor: " />
+										<p:outputLabel value="UF:" />
+										<p:outputLabel value="" />
+										
+										<p:inputText value="#{alunoService.aluno.mae.nome}" size="25"
+											maxlength="30" />
+										<p:inputMask value="#{alunoService.aluno.mae.cpf}" size="15"
+											mask="999.999.999-99" />
+										<p:inputText value="#{alunoService.aluno.mae.rg}"
+											maxlength="10" size="15"/>
+										<p:inputText value="#{alunoService.aluno.mae.rgEmissor}"
+											maxlength="15" size="15" />
+										<p:selectOneMenu value="#{alunoService.aluno.mae.rgUf}"
+											label="Siglas">
+											<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+											<f:selectItems value="#{alunoService.siglas}" var="siglas"
+												itemValue="#{siglas}" />
+										</p:selectOneMenu>																					
+										<p:outputLabel value="" />									
+																				
+										<p:outputLabel value="Profissao: " />
+										<p:outputLabel value="Local de Trabalho: " />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />										
+																				
+										
+										<p:inputText value="#{alunoService.aluno.mae.profissao}" />										
+										<p:inputText value="#{alunoService.aluno.mae.localTrabalho}" size="15"/>
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+																																																																					
+									</p:panelGrid>
+									<p:panelGrid columns="6" styleClass="panelGrid"
+										rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}">
+										<p:outputLabel value="Telefone 1: " />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 2:" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 3" />
+										<p:outputLabel value="Falar com:" />
+										
+										<p:inputMask value="#{alunoService.aluno.telefone1}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom1}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone2}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom2}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone3}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom3}" size="20" maxlength="30" />
+										
+										<p:outputLabel value="Telefone 4" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 5" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 6" />
+										<p:outputLabel value="Falar com:" />
+										
+										<p:inputMask value="#{alunoService.aluno.telefone4}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom4}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone5}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom5}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone6}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom6}" size="20" maxlength="30" />
+
+	
+									</p:panelGrid>
+
+									<p:panelGrid columns="6" styleClass="panelGrid"
+										rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}">
+										<p:outputLabel value="Nome Pai:* " />
+										<p:outputLabel value="CPF:*" />
+										<p:outputLabel value="RG: " />
+										<p:outputLabel value="Emissor: " />
+										<p:outputLabel value="UF:" />
+										<p:outputLabel value="" />	
+
+										<p:inputText value="#{alunoService.aluno.pai.nome}" size="25"
+											maxlength="30" />
+										<p:inputMask value="#{alunoService.aluno.pai.cpf}" size="15"
+											mask="999.999.999-99" />
+										<p:inputText value="#{alunoService.aluno.pai.rg}"
+											maxlength="10" size="15"/>
+										<p:inputText value="#{alunoService.aluno.pai.rgEmissor}"
+											maxlength="15" size="15" />
+										<p:selectOneMenu value="#{alunoService.aluno.pai.rgUf}"
+											label="Siglas">
+											<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+											<f:selectItems value="#{alunoService.siglas}" var="siglas"
+												itemValue="#{siglas}" />
+										</p:selectOneMenu>
+										<p:outputLabel value="" />	
+
+										<p:outputLabel value="Profissao: " />
+										<p:outputLabel value="Local de Trabalho: " />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										
+										<p:inputText value="#{alunoService.aluno.pai.profissao}" />
+										<p:inputText value="#{alunoService.aluno.pai.localTrabalho}" size="15"/>
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />																	
+									</p:panelGrid>
+									<p:panelGrid columns="6" styleClass="panelGrid"
+										rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}">
+										<p:outputLabel value="Telefone 1: " />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 2:" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 3" />
+										<p:outputLabel value="Falar com:" />
+										
+										<p:inputMask value="#{alunoService.aluno.telefone1}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom1}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone2}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom2}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone3}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom3}" size="20" maxlength="30" />
+										
+										<p:outputLabel value="Telefone 4" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 5" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 6" />
+										<p:outputLabel value="Falar com:" />
+										
+										<p:inputMask value="#{alunoService.aluno.telefone4}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom4}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone5}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom5}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone6}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom6}" size="20" maxlength="30" />
+									</p:panelGrid>
+
+									<p:panelGrid columns="6" styleClass="panelGrid"
+										rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}">
+										<p:outputLabel value="Nome:* " />
+										<p:outputLabel value="CPF:*" />
+										<p:outputLabel value="RG: " />
+										<p:outputLabel value="Emissor: " />
+										<p:outputLabel value="UF:" />
+										<p:outputLabel value="" />	
+
+										<p:inputText value="#{alunoService.aluno.responsavel.nome}"
+											size="25" maxlength="30" />
+										<p:inputMask value="#{alunoService.aluno.responsavel.cpf}"
+											size="15" mask="999.999.999-99" />
+										<p:inputText value="#{alunoService.aluno.responsavel.rg}"
+											maxlength="10" size="15" />
+										<p:inputText
+											value="#{alunoService.aluno.responsavel.rgEmissor}"
+											maxlength="15" size="15" />
+										<p:selectOneMenu
+											value="#{alunoService.aluno.responsavel.rgUf}" label="Siglas">
+											<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+											<f:selectItems value="#{alunoService.siglas}" var="siglas"
+												itemValue="#{siglas}" />
+										</p:selectOneMenu>
+										<p:outputLabel value="" />	
+										
+										<p:outputLabel value="Profissao: " />
+										<p:outputLabel value="Local de Trabalho: " />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										
+										<p:inputText value="#{alunoService.aluno.responsavel.profissao}" />
+										<p:inputText value="#{alunoService.aluno.responsavel.localTrabalho}" size="15"/>
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+										<p:outputLabel value="" />
+									</p:panelGrid>
+									<p:panelGrid columns="6" styleClass="panelGrid"
+										rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}">
+										<p:outputLabel value="Telefone 1: " />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 2:" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 3" />
+										<p:outputLabel value="Falar com:" />
+										
+										<p:inputMask value="#{alunoService.aluno.telefone1}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom1}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone2}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom2}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone3}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom3}" size="20" maxlength="30" />
+										
+										<p:outputLabel value="Telefone 4" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 5" />
+										<p:outputLabel value="Falar com:" />
+										<p:outputLabel value="Telefone 6" />
+										<p:outputLabel value="Falar com:" />
+										
+										<p:inputMask value="#{alunoService.aluno.telefone4}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom4}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone5}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom5}" size="20" maxlength="30" />										
+										<p:inputMask value="#{alunoService.aluno.telefone6}"
+											mask="(99)99999-9999" size="16" />										
+										<p:inputText value="#{alunoService.aluno.falarCom6}" size="20" maxlength="30" />
+										</p:panelGrid>
+
+								</h:panelGroup>
+							</p:panelGrid>
+						</p:panel>
+					</p:tab>
+
+					<p:tab id="Endereco" title="Endereço">
+						<p:panel header="Dados Endereço">
+							<p:messages />
+
+							<!-- Endereco -->
+							<p:panelGrid columns="4" styleClass="panelGrid">
+								<p:outputLabel value="Logradouro:" />
+								<p:outputLabel value="Nº " />
+								<p:outputLabel value="CEP: " />
+								<p:outputLabel value="Bairro: " />
+
+
+
+
+								<p:inputText value="#{alunoService.aluno.endereco.logradouro}" />
+								<p:inputText value="#{alunoService.aluno.endereco.numeroCasa}"
+									size="5" maxlength="5" label="Numero" />
+								<p:inputMask value="#{alunoService.aluno.endereco.cep}"
+									mask="99.999-999" size="15" />
+
+								<p:inputText value="#{alunoService.aluno.endereco.bairro}" />
+
+
+								<p:outputLabel value="Cidade: " />
+								<p:outputLabel value="UF: " />
+								<p:outputLabel value="Tipo de Residencia:" />
+								<p:outputLabel value="Tempo de Residencia:" />
+
+								<p:inputText value="#{alunoService.aluno.endereco.cidade}" />
+								<p:selectOneMenu
+									value="#{alunoService.aluno.endereco.enderecoUf}"
+									label="Siglas">
+									<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+									<f:selectItems value="#{alunoService.siglas}" var="siglas"
+										itemValue="#{siglas}" />
+								</p:selectOneMenu>
+
+								<p:selectOneMenu
+									value="#{alunoService.aluno.endereco.tipoResidencia}"
+									editable="true" style="width:150px;">
+									<f:selectItem itemLabel="Selecione" itemValue=""></f:selectItem>
+									<f:selectItem itemLabel="Própria" itemValue="Própria"></f:selectItem>
+									<f:selectItem itemLabel="Alugada" itemValue="Alugada"></f:selectItem>
+									<f:selectItem itemLabel="Cedida" itemValue="Cedida"></f:selectItem>
+								</p:selectOneMenu>
+
+								<p:inputText size="20" maxlength="20"
+									value="#{alunoService.aluno.tempoResidencia}" />
+							</p:panelGrid>
+							<p:panelGrid columns="1" styleClass="panelGrid">
+								
+							</p:panelGrid>
+						</p:panel>
+					</p:tab>
+									
+					<p:tab id="confirma" title="Confirmar">
+
+						<p:panel header="Confirmar Dados">
+						
+						<p:panelGrid styleClass="panelGrid" columns="3">						
+								<p:outputLabel value="Turma:" />
+								<p:outputLabel value="Ano Letivo" />
+								<p:outputLabel value="Escola de Origem" />								
+								
+
+								<p:selectOneMenu value="#{alunoService.aluno.turma}"
+									converter="turmaConverter">
+									<f:selectItems value="#{turmaService.turmas}" var="turmas"
+										itemLabel="#{turmas.nome} - #{turmas.serie.nome} - #{turmas.turno}"
+										itemValue="#{turmas}" />
+								</p:selectOneMenu>
+								
+
+								<p:inputMask value="#{alunoService.aluno.anoLetivo}"
+									mask="9999" size="6" required="true" requiredMessage="Informe o ano letivo"/>								
+								<p:inputText value="#{alunoService.aluno.escolaOrigem}" size="35" maxlength="30"/>
+							</p:panelGrid>
+						
+							<p:panelGrid columns="2" styleClass="panelGrid">
+								<p:outputLabel value="Todos os Documentos Entregues:" />
+								<p:outputLabel value="Documentação Pendente" />
+								
+								<p:selectBooleanButton offLabel="Não" onLabel="Sim"
+									value="#{alunoService.aluno.docPendente}" />								
+								<p:inputText value="#{alunoService.aluno.descricaoDocPendente}"
+									size="30" />
+									
+								<p:outputLabel value="Add Código MEC"/>
+								<p:outputLabel value=""/>
+								<p:inputText value="#{alunoService.aluno.codMec}" maxlength="10" size="15"/>
+								<p:outputLabel value=""/>
+
+								
+							</p:panelGrid>
+							<p:separator></p:separator>
+							<p:commandButton value="Salvar" action="#{alunoService.save}"
+								update=":form:salvarMsg" icon="ui-icon-disk"
+								style="font-size:14px">
+							</p:commandButton>
+
+						</p:panel>
+					</p:tab>
+				</p:wizard>
+				<!-- 				</p:tabView> -->
+
+			</h:form>
+
+		</div>
+
+	</div>
+
+</h:body>
+</html>
+

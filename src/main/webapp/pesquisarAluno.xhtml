@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta de Alunos Matriculados</title>
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+
+		<div id="conteudo">
+
+			<h3>Consulta de ALunos Matriculados</h3>
+
+			<h:form id="frm" target="_blank">
+				<p:growl id="msgs" sticky="true" showDetail="true" />
+				<h:panelGrid columns="3">
+					<p:inputText value="#{alunoService.filtro.nome}" id="nome" />
+
+					<p:commandButton value="Consultar por Nome" update="tbl"
+						process="@form" />
+				</h:panelGrid>
+
+				<p:dataTable value="#{alunoService.model}" lazy="true" var="aluno"
+					paginator="true" rows="10" paginatorPosition="bottom" id="tbl"
+					editable="true" editMode="cell"
+					tableStyle="font-size:14px;text-align: center; text-transform: uppercase;">
+					<p:column headerText="ID" sortBy="#{aluno.id}" width="7%">
+						<h:outputText value="#{aluno.id}" />
+					</p:column>
+					<p:outputLabel
+						rendered="#{alunoService.aluno.docPendente == false}"
+						value="Não, #{alunoService.aluno.descricaoDocPendente} " />
+					<p:outputLabel rendered="#{alunoService.aluno.docPendente == true}"
+						value="Sim" />
+
+					<p:column headerText="Ativo" width="10%" sortBy="#{aluno.ativo}">
+						<p:graphicImage value="/resources/img/check.png"
+							rendered="#{aluno.ativo == true}" height="25px" />
+						<p:graphicImage value="/resources/img/x.png"
+							rendered="#{aluno.ativo == false}" height="15px" />
+					</p:column>
+					<p:column headerText="Nome" width="25%" style="text-align: left;">
+						<h:outputText value="#{aluno.nome}" />
+					</p:column>
+					<p:column headerText="D.Nascimento" style="text-align:center"
+						width="15%">
+						<h:outputText value="#{aluno.dataNasc}">
+							<f:convertDateTime pattern="dd/MM/yyyy"
+								timeZone="America/Sao_Paulo" />
+						</h:outputText>
+					</p:column>
+					<p:column headerText="Matricula" width="15%">
+						<h:outputText value="#{aluno.matricula}" />
+					</p:column>
+					<p:column headerText="Turma - Serie" width="20%">
+						<h:outputText value="#{aluno.turma.nome}" /> - 
+						<h:outputText value="#{aluno.turma.serie.nome}" />
+					</p:column>
+					<p:column headerText="Turno" width="10%">
+						<h:outputText value="#{aluno.turma.turno}" />
+
+					</p:column>
+
+					<p:column width="22%">
+						<p:button icon="ui-icon-info" title="Contato"
+							outcome="alunoContato">
+							<f:param name="id" value="#{aluno.id}" />
+						</p:button>
+						<p:button icon="ui-icon-print" title="Imprimir"
+							outcome="formularioMatricula" target="_blank">
+							<f:param name="id" value="#{aluno.id}" />
+						</p:button>
+						<p:button icon="ui-icon-pencil" title="Editar"
+							outcome="editarAluno" target="_blank">
+							<f:param name="id" value="#{aluno.id}" />
+						</p:button>
+						<p:button icon="ui-icon-alert" title="Ocorrencia"
+							outcome="addOcorrencias">
+							<f:param name="id" value="#{aluno.id}" />
+						</p:button>
+						<p:button title="Carnê" outcome="addCarne" target="_blank"
+							image="carne" icon="ui-icon-contact">
+							<f:param name="id" value="#{aluno.id}" />
+						</p:button>
+					</p:column>
+				</p:dataTable>
+				
+
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
+

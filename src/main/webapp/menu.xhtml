@@ -1,0 +1,83 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:head>
+
+		<title>Insert title here</title>
+
+		<h:outputStylesheet library="css" name="layout.css" />
+		<h:outputScript library="js" name="script.js" />
+		<h:outputScript library="js" name="active.js" />
+
+	</h:head>
+	<body>
+		<SCRIPT type="text/javascript">
+			
+		</SCRIPT>
+		<div id="MENUSIDE">
+			<nav id="nav">
+				<div id='cssmenu'>
+					<ul>
+						<li class='active'></li>
+						<li class='has-sub'><a href='#'><span><img
+									src="resources/img/academico.png" height="30px" />Alunos</span></a>
+							<ul>
+								<li><a href='matricularAluno.xhtml'><span>Matricular</span></a></li>
+								<li><a href='renovarMatriculaAluno.xhtml'><span>Renovar
+											Matricula</span></a></li>
+								<li class='last'><a href='pesquisarAluno.xhtml'><span>Pesquisar
+											Alunos</span></a></li>
+
+							</ul></li>
+						<li class='has-sub'><a href='#'><span> <img
+									src="resources/img/academico.png" height="30px" />Cadastros
+							</span></a>
+							<ul>
+								<li><p:link value="Funcionario"
+										title="Cadastrar Funcionarios"
+										href="cadastrarFuncionario.xhtml"
+										rendered="#{loginService.perfilUsuario == 1}"></p:link> <p:link
+										value="" title="" disabled="true" href="#"
+										rendered="#{loginService.perfilUsuario == 2}"></p:link></li>
+
+								<li><p:link value="Serie" title="Cadastrar Serie"
+										href="cadastrarSerie.xhtml"
+										rendered="#{loginService.perfilUsuario == 1}"></p:link> <p:link
+										value="" title="" disabled="true" href="#"
+										rendered="#{loginService.perfilUsuario == 2}"></p:link></li>
+
+								<li class='last'><p:link value="Turma"
+										title="Cadastrar Turma" href="cadastrarTurma.xhtml"
+										rendered="#{loginService.perfilUsuario == 1}"></p:link> <p:link
+										value="" title="" disabled="true" href="#"
+										rendered="#{loginService.perfilUsuario == 2}"></p:link></li>
+							</ul>
+						</li>
+						<li class='has-sub'><a href='#'><span> <img
+									src="resources/img/professor.png" height="30px" />Professores
+							</span></a>
+							<ul>
+								<li><a href='cadastrarProfessor.xhtml'><span>Professor</span></a></li>
+							</ul></li>
+						<li class='has-sub'><a href='#'><span> <img
+									src="resources/img/academico.png" height="30px" />Financeiro
+							</span></a>
+							<ul>
+								<li><p:link value="Financeiro" title="Controle Financeiro"
+										href="financeiro.xhtml"
+										rendered="#{loginService.perfilUsuario == 1}"></p:link> <p:link
+										value="" title="" disabled="true" href="#"
+										rendered="#{loginService.perfilUsuario == 2}"></p:link></li>
+							</ul></li>
+
+
+						<!-- 						<li class='has-sub'><a href='#'><span>About</span></a>							 -->
+						<!-- 						<li class='last'><a href='#'><span>Contact</span></a></li>					 -->
+					</ul>
+				</div>
+			</nav>
+		</div>
+	</body>
+</ui:composition>

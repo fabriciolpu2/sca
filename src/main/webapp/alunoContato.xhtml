@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<title>Aluno</title>
+	<h:outputStylesheet library="css" name="layout.css" />
+	<h:outputScript library="js" name="pt_BR.js" />
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo" style="height: auto;">
+
+			<f:metadata>
+				<o:viewParam name="id" value="#{alunoService.aluno}" />
+			</f:metadata>
+
+
+
+			<h:form id="form" target="_blank">
+
+				<p:panel header="Informações de Contato" style="height:100%" id="pnl">
+					<p:outputLabel
+						value="Aluno: #{alunoService.aluno.nome}" />
+					<BR />
+					<p:outputLabel value="Responsável: "/>												
+							<p:outputLabel
+								
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.nome}"></p:outputLabel>
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.nome}"></p:outputLabel>
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.nome}">
+							</p:outputLabel>
+
+
+							<BR/>
+							<BR/>
+							<p:outputLabel value="Telefone 1:  "/>
+							<p:outputLabel value="#{alunoService.aluno.telefone1}" />
+							<p:outputLabel value="  - Falar com:  #{alunoService.aluno.falarCom1}" />
+							<BR/><BR/>
+							<p:outputLabel value="Telefone 2:  "/>
+							<p:outputLabel value="#{alunoService.aluno.telefone2}" />
+							<p:outputLabel value="  - Falar com:  #{alunoService.aluno.falarCom2}" />
+							<BR/><BR/>
+							<p:outputLabel value="Telefone 3:  "/>
+							<p:outputLabel value="#{alunoService.aluno.telefone3}" />
+							<p:outputLabel value="  - Falar com:  #{alunoService.aluno.falarCom3}" />
+							<BR/><BR/>
+							<p:outputLabel value="Telefone 4:  "/>
+							<p:outputLabel value="#{alunoService.aluno.telefone4}" />
+							<p:outputLabel value="  - Falar com:   #{alunoService.aluno.falarCom4}" />
+							<BR/><BR/>
+							<p:outputLabel value="Telefone 5:  "/>
+							<p:outputLabel value="#{alunoService.aluno.telefone5}" />
+							<p:outputLabel value="  - Falar com:  #{alunoService.aluno.falarCom5}" />
+							<BR/><BR/>
+							<p:outputLabel value="Telefone 6:  "/>
+							<p:outputLabel value="#{alunoService.aluno.telefone6}" />
+							<p:outputLabel value="  - Falar com:  #{alunoService.aluno.falarCom6}" />
+
+
+
+							
+							
+
+				</p:panel>
+
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
+
+

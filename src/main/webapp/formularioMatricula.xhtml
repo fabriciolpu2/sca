@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<title>Aluno: #{alunoService.aluno.nome} </title>
+	<h:outputStylesheet library="css" name="impressao.css" />
+</h:head>
+
+<h:body>
+
+	<f:metadata>
+		<o:viewParam name="id" value="#{alunoService.aluno}" />
+	</f:metadata>
+<!-- 		<input type="button" name="imprimir" value="Imprimir" onclick="window.print();this.rendered=false;"></input> -->
+	<div class="impressao" id="printer">
+		<div id="cabecalho">
+			<div id="logo">
+				<img src="resources/img/philadelphia.png" width="140" height="60" />
+			</div>
+			<div id="txtCabecalho">
+				<H2>ESCOLA EVANGÉLICA PHILADELPHIA</H2>
+				<BR />
+				<H3>
+					Crescendo em graça e conhecimento<BR /> Rua: José Aleixo – 3125,
+					Cambará<BR /> Boa Vista – Roraima<BR /> (095) 3626 – 3706<BR />
+					CNPJ: 00.604.243/0001 – 39<BR /> Parecer do CME/BV: 08/2011<BR />
+				</H3>
+			</div>
+		</div>
+
+
+		<div id="dadosAluno">
+			<h:form>
+				<TABLE border="1" class="tabelaDados">
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="6"
+							style="border-left: 1px solid white; border-top: 1px solid white;" />
+						<TD colspan="2" style="width: 120px;">Código Unico:</TD>
+					</TR>
+					<TR style="width: 768px;">
+						<TD colspan="6"
+							style="border-left: 1px solid white; border-top: 1px solid white;" />
+						<TD colspan="2" style="width: 173px; text-align: right; padding-right: 10px;"><p:outputLabel
+								rendered="#{alunoService.aluno.codMec == null}"
+								value="00000000000" /> <p:outputLabel
+								rendered="#{alunoService.aluno.codMec != null}"
+								value="#{alunoService.aluno.codMec}" /></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD width="74" style="width: 70px;">Convenio?</TD>
+
+						<TD colspan="6">Se sim, Especificar:</TD>
+
+						<TD colspan="1" style="width: 120px;">Número de Matricula:</TD>
+
+					</TR>
+					<TR style="width: 768px;">
+						<TD><p:outputLabel
+								rendered="#{alunoService.aluno.conveniado == false}" value="Não" />
+							<p:outputLabel
+								rendered="#{alunoService.aluno.conveniado == true}" value="Sim" />
+						</TD>
+						<TD colspan="6"><p:outputLabel
+								value="#{alunoService.aluno.descricaoConvenio}" /></TD>
+						<TD colspan="1" style="width: 173px;"><p:outputLabel
+								value="#{alunoService.aluno.matricula}" /></TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno" style="width: 754px;">
+						<TD>Renovar Matricula?</TD>
+						<TD width="35">ANO</TD>
+						<TD width="43" style="width: 112px;">Serie</TD>
+						<TD width="87">Turno</TD>
+						<TD colspan="3">Origem(Escola)</TD>
+						<TD colspan="1">Data de Matricula</TD>
+					</TR>
+					<TR>
+						<TD></TD>
+						<TD><p:outputLabel value="#{alunoService.aluno.anoLetivo}" /></TD>
+						<TD><p:outputLabel
+								value="#{alunoService.aluno.turma.serie.nome}" /></TD>
+						<TD><p:outputLabel value="#{alunoService.aluno.turma.turno}" /></TD>
+						<TD colspan="3"><p:outputLabel
+								value="#{alunoService.aluno.escolaOrigem}" /></TD>
+						<TD colspan="1"><p:outputLabel
+								value="#{alunoService.aluno.dataMatricula}">
+								<f:convertDateTime pattern="dd/MM/yyyy"></f:convertDateTime>
+							</p:outputLabel></TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="3"><small>Nome do Aluno:</small></TD>
+						<TD>Sexo</TD>
+						<TD colspan="2">D. Nascimento</TD>
+						<TD width="121" style="width: 63px;">Nacionalidade</TD>
+						<TD width="82" style="width: 114px;">Naturalidade</TD>
+
+
+					</TR>
+					<TR>
+						<TD colspan="3"><p:outputLabel
+								value="#{alunoService.aluno.nome}" styleClass="dados" /></TD>
+						<TD><p:outputLabel value="#{alunoService.aluno.sexo}" /></TD>
+						<TD colspan="2"><p:outputLabel
+								value="#{alunoService.aluno.dataNasc}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel></TD>
+						<TD><p:outputLabel
+								value="#{alunoService.aluno.nacionalidade}" /></TD>
+						<TD><p:outputLabel
+								value="#{alunoService.aluno.naturalidade}/#{alunoService.aluno.uf}" /></TD>
+
+
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="5">Endereço</TD>
+						<TD colspan="2" style="width: 152px;">Número</TD>
+						<TD colspan="1">CEP</TD>
+					</TR>
+					<TR>
+						<TD colspan="5"><p:outputLabel
+								value="#{alunoService.aluno.endereco.logradouro}" /></TD>
+						<TD colspan="2"><p:outputLabel
+								value="#{alunoService.aluno.endereco.numeroCasa}" /></TD>
+						<TD colspan="1"><p:outputLabel
+								value="#{alunoService.aluno.endereco.cep}" /></TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="3">Bairro:</TD>
+						<TD colspan="3">Cidade:</TD>
+						<TD width="92">UF:</TD>
+						<TD colspan="1">Tipo de Residencia</TD>
+					</TR>
+					<TR>
+						<TD colspan="3"><p:outputLabel
+								value="#{alunoService.aluno.endereco.bairro}" /></TD>
+						<TD colspan="3"><p:outputLabel
+								value="#{alunoService.aluno.endereco.cidade}" /></TD>
+						<TD><p:outputLabel
+								value="#{alunoService.aluno.endereco.enderecoUf}" /></TD>
+						<TD colspan="1"><p:outputLabel
+								value="#{alunoService.aluno.endereco.tipoResidencia}" /></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="6">Nome dos Pais</TD>
+						<TD colspan="2" style="width: 161px;">Os Documentos
+							apresentados pertencem ao(a)</TD>
+					</TR>
+					<TR>
+						<TD colspan="6"><p:outputLabel
+								value="#{alunoService.aluno.mae.nome} / #{alunoService.aluno.pai.nome}" /></TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.nome}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.nome}"></p:outputLabel></TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD>RG</TD>
+						<TD colspan="2">SSP</TD>
+						<TD colspan="2">CPF</TD>
+						<TD colspan="2">Profissao</TD>
+						<TD colspan="1" style="width: 222px;">Local de Trabalho</TD>
+					</TR>
+					<TR>
+						<TD><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.rg}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.rg}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.rg}"></p:outputLabel></TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.rgEmissor}/#{alunoService.aluno.mae.rgUf}"></p:outputLabel>
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.rgEmissor}/#{alunoService.aluno.pai.rgUf}"></p:outputLabel>
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.rgEmissor}/#{alunoService.aluno.responsavel.rgUf}"></p:outputLabel>
+						</TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.cpf}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.cpf}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.cpf}"></p:outputLabel></TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.profissao}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.profissao}"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.profissao}"></p:outputLabel>
+						</TD>
+						<TD colspan="1"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.localTrabalho}"></p:outputLabel>
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.localTrabalho}"></p:outputLabel>
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.localTrabalho}"></p:outputLabel>
+						</TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="3">Telefone 1</TD>
+						<TD colspan="3">Telefone 2</TD>
+						<TD colspan="2">Telefone 3</TD>					
+					</TR>
+					<TR>
+						<TD colspan="3">
+							<p:outputLabel value="#{alunoService.aluno.telefone1} - "></p:outputLabel>
+							<p:outputLabel value=" #{alunoService.aluno.falarCom1}"></p:outputLabel>															
+						</TD>						
+						<TD colspan="3">
+							<p:outputLabel value="#{alunoService.aluno.telefone2} - "></p:outputLabel>
+							<p:outputLabel value=" #{alunoService.aluno.falarCom2}"></p:outputLabel>															
+						</TD>
+						<TD colspan="2">
+							<p:outputLabel value="#{alunoService.aluno.telefone3} - "></p:outputLabel>
+							<p:outputLabel value=" #{alunoService.aluno.falarCom3}"></p:outputLabel>															
+						</TD>
+					</TR>
+					
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="3">Telefone 4</TD>
+						<TD colspan="3">Telefone 5</TD>
+						<TD colspan="2">Telefone 6</TD>					
+					</TR>
+					<TR>
+						<TD colspan="3">
+							<p:outputLabel value="#{alunoService.aluno.telefone4} - "></p:outputLabel>
+							<p:outputLabel value=" #{alunoService.aluno.falarCom4}"></p:outputLabel>															
+						</TD>						
+						<TD colspan="3">
+							<p:outputLabel value="#{alunoService.aluno.telefone5} - "></p:outputLabel>
+							<p:outputLabel value=" #{alunoService.aluno.falarCom5}"></p:outputLabel>															
+						</TD>
+						<TD colspan="2">
+							<p:outputLabel value="#{alunoService.aluno.telefone6} - "></p:outputLabel>
+							<p:outputLabel value=" #{alunoService.aluno.falarCom6}"></p:outputLabel>															
+						</TD>
+					</TR>
+					
+					
+					<TR class="txtPqno" id="txtPqno">
+						<TD>Renda Familiar</TD>
+						<TD colspan="2">Tempo no Endereço</TD>
+						<TD colspan="3">Numero de Imçãos menores de 18 anos</TD>
+						<TD colspan="2" style="width: 271px;">Mora com:</TD>
+					</TR>
+					<TR>
+						<TD style="width: 103px;"><p:outputLabel
+								value="#{alunoService.aluno.rendaFamiliar},00" /></TD>
+						<TD colspan="2"><p:outputLabel
+								value="#{alunoService.aluno.tempoResidencia}" /></TD>
+						<TD colspan="3"><p:outputLabel
+								value="#{alunoService.aluno.numIrmaos}" /></TD>
+						<TD colspan="2" style="width: 320px;"><p:outputLabel
+								value="#{alunoService.aluno.moraCom}" /></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="5">Endereço</TD>
+						<TD colspan="2">Número</TD>
+						<TD colspan="2">CEP</TD>
+					</TR>
+					<TR>
+						<TD colspan="5"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca">
+							</p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca">
+							</p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.logradouro}">
+							</p:outputLabel></TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.numeroCasa}"></p:outputLabel>
+						</TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.cep}"></p:outputLabel>
+						</TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="3" style="width: 234px;">Bairro:</TD>
+						<TD colspan="3">Cidade:</TD>
+						<TD width="92" style="width: 57px;">UF:</TD>
+						<TD colspan="2">Tipo de Residencia</TD>
+					</TR>
+					<TR>
+						<TD colspan="3" style="width: 210px;"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.bairro}"></p:outputLabel>
+						</TD>
+						<TD colspan="3"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.cidade}"></p:outputLabel>
+						</TD>
+						<TD colspan="1"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.enderecoUf}"></p:outputLabel>
+						</TD>
+						<TD colspan="2"><p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Não se Aplinca"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.endereco.tipoResidencia}"></p:outputLabel>
+						</TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="4">Portador de Necessidades Especiais?</TD>
+						<TD colspan="4">Tem ou teve alguma doença que precise de
+							cuidados?</TD>
+
+					</TR>
+					<TR>
+						<TD colspan="4"><p:outputLabel
+								rendered="#{alunoService.aluno.pne == false}" value="Não" /> <p:outputLabel
+								rendered="#{alunoService.aluno.pne == true}"
+								value="Sim, #{alunoService.aluno.descricaoPne}" /></TD>
+						<TD colspan="4"><p:outputLabel
+								rendered="#{alunoService.aluno.doente == false}" value="Não" />
+							<p:outputLabel rendered="#{alunoService.aluno.doente == true}"
+								value="Sim, #{alunoService.aluno.doencaCuidados}" /></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno" style="width: 901px;">
+						<TD colspan="4">É alergico a algum tipo de
+							alimento/medicamento?</TD>
+						<TD colspan="4">Foram entregues todos os documentos?</TD>
+					</TR>
+					<TR>
+						
+						<TD colspan="4"><p:outputLabel
+								rendered="#{alunoService.aluno.alergias == false}" value="Não" />
+							<p:outputLabel rendered="#{alunoService.aluno.alergias == true}"
+								value="Sim, #{alunoService.aluno.descricaoAlergias}" /></TD>
+						<TD colspan="4"><p:outputLabel
+							rendered="#{alunoService.aluno.docPendente == false}"
+							value="Não, #{alunoService.aluno.descricaoDocPendente} " /> <p:outputLabel
+							rendered="#{alunoService.aluno.docPendente == true}" value="Sim" />
+						</TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno" style="width: 901px;">
+						<TD colspan="3">Quem efetuou a matricula</TD>
+						<TD colspan="2">Grau de Parentesco</TD>
+						<TD colspan="3" style="width: 229px;">Funcionario que efetuou
+							a matricula</TD>
+					</TR>
+					<TR>
+						<TD colspan="3">								
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="#{alunoService.aluno.mae.nome}"></p:outputLabel> 
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="#{alunoService.aluno.pai.nome}"></p:outputLabel> 
+							<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="#{alunoService.aluno.responsavel.nome}">
+							</p:outputLabel>															
+						</TD>
+						<TD colspan="2">
+						<p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 1}"
+								value="Mãe"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 2}"
+								value="Pai"></p:outputLabel> <p:outputLabel
+								rendered="#{alunoService.aluno.responsavel.grauParentesco == 3}"
+								value="Outro"></p:outputLabel></TD>
+						<TD colspan="3"><h:outputLabel
+								value="#{loginService.nomeUser}" /></TD>
+					</TR>
+				</TABLE>
+				<DIV style="text-align: right; margin-top: 1px; font-size: 10px;">
+				¹Não medicamos nem aplicamos medicamentos.
+				<BR />
+				</DIV>				
+				<BR />
+				<TABLE style="border: 1px solid black; border-collapse: collapse; 
+				border-bottom: none; width: 100%;">
+					<TR>
+						<TD style="border: 1px solid black;border-bottom: none; 
+						width: 12%; text-align: center; font-size: 12px;">DATA</TD>
+						<TD style="text-align: center; font-size: 12px;">OCORRENCIAS</TD>						
+					</TR>					
+				</TABLE>			
+						
+				<DIV id="ocorrencia">					
+					<p:dataTable value="#{alunoService.aluno.ocorrencias}" 
+						var="ocorrencia" id="tbOcorrencia" styleClass="mystyle" tableStyleClass="tbocorrencia" 
+						rowStyleClass="tbocorrenciaRow" emptyMessage="Sem Registros de Ocorrência" >					
+						<p:column style="width: 12%;">
+							<p:outputLabel value="#{ocorrencia.dataDeRegistro}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+						</p:column>					
+						<p:column>
+							<p:outputLabel value="#{ocorrencia.descricao}" style="background-colo: blue;"/>
+						</p:column>						
+					</p:dataTable>					
+				</DIV>
+				<BR />
+				<DIV id="tbHorario">
+					Horários de entrada e saída dos alunos
+					<TABLE border="1"
+						style="border-collapse: collapse; text-align: center; width: 100%; border-color: black">
+						<TR>
+							<TD
+								style="border-left: 1px solid white; border-top: 1px solid white;"></TD>
+							<TD><STRONG>Manhã</STRONG></TD>
+							<TD><STRONG>Tarde</STRONG></TD>
+							<TD><STRONG>Integral</STRONG></TD>
+						</TR>
+						<TR style="background-color: #DCDCDC;">
+							<TD><STRONG>Entrada</STRONG></TD>
+							<TD>07 horas e 30 minutos</TD>
+							<TD>13 horas e 30 minutos</TD>
+							<TD>07 horas e 30 minutos</TD>
+						</TR>
+						<TR>
+							<TD><STRONG>Saida</STRONG></TD>
+							<TD>11 horas e 30 minutos</TD>
+							<TD>17 horas e 30 minutos</TD>
+							<TD>17 horas e 30 minutos</TD>
+						</TR>
+
+					</TABLE>
+				</DIV>
+				<BR />
+				<BR />
+				<DIV id="tbReuniao">
+					<TABLE border="1" style="border-collapse: collapse; text-align: center; width: 100%; font-size: 10px; border-color: black;">
+						<TR>
+							<TD colspan="5">PARTICIPAÇÃO DO PAI/RESPONSAVEL NAS REUNIÕES</TD>
+						</TR>
+						<TR>
+							<TD>1ª Reunião<BR />Participou? ( )SIM (  )NÃO</TD>
+							<TD>2ª Reunião<BR />Participou? ( )SIM (  )NÃO</TD>
+							<TD>3ª Reunião<BR />Participou? ( )SIM (  )NÃO</TD>
+							<TD>4ª Reunião<BR />Participou? ( )SIM (  )NÃO</TD>
+							<TD>5ª Reunião / se houver<BR />Participou? ( )SIM (  )NÃO</TD>
+						</TR>
+					</TABLE>
+				</DIV>
+				
+			</h:form>
+			<BR />
+			<BR />
+			<BR />
+			<BR />
+			<div id="rodaPe">
+			<BR />
+				____________________________________ <BR /> Assinatura do
+				Responsável
+				<DIV style="text-align: right; margin-left: 70%;">
+					Crescendo em graça e conhecimento.<BR />
+					Lucas 2:52
+				</DIV>
+			</div>
+		</div>
+		
+		<!--<div style="page-break-after: always;"></div>-->
+		<!-- 
+		<div id="cabecalho">
+			<div id="logo">
+				<img src="resources/img/philadelphia.png" width="140" height="60" />
+			</div>
+			<div id="txtCabecalho">
+				<H2>ESCOLA EVANGÉLICA PHILADELPHIA</H2>
+				<BR />
+				<H3>
+					Crescendo em graça e conhecimento<BR /> Rua: José Aleixo – 3125,
+					Cambará<BR /> Boa Vista – Roraima<BR /> (095) 3626 – 3706<BR />
+					CNPJ: 00.604.243/0001 – 39<BR /> Parecer do CME/BV: 08/2011<BR />
+				</H3>
+			</div>
+		</div>
+		
+		
+		<div style="text-align: justify; font-size: 10px; line-height: 100%;"
+			id="contrato">
+			CONTRATO DE ADESAO <br /> A contratada Escola Evangélica
+			Philadelphia situada à Rua José Aleixo nº 3.125, bairro Cambará, Boa
+			Vista – RR, CNPJ de Nº 00.604.243/0001 – 39, neste ato representada
+			por sua Diretora Ivana Márcia Oliveira Veloso, mediante as cláusulas
+			e condições abaixo: O presente instrumento particular de adesão para
+			prestação de serviços educacionais que se fazem entre as partes,
+			contratante e contratada, sendo como contratante o sr. <STRONG>
+				<p:outputLabel styleClass="detalheContrato"
+					value="#{alunoService.aluno.pai.nome} " />
+			</STRONG> CPF:<STRONG> <p:outputLabel styleClass="detalheContrato"
+					value=" #{alunoService.aluno.pai.cpf}  " /></STRONG> e a srª.<STRONG>
+				<p:outputLabel styleClass="detalheContrato"
+					value=" #{alunoService.aluno.mae.nome}" />
+			</STRONG> CPF:<STRONG> <p:outputLabel styleClass="detalheContrato"
+					value="#{alunoService.aluno.mae.cpf}" /></STRONG>
+			<p />
+			CLÁUSULA PRIMEIRA – DO PROJETO <br /> Devidamente denominados,
+			CONTRATANTE e CONTRATADA respectivamente, abaixo assinado entre si,
+			celebrando o presente contrato de PRESTAÇÃO DE SERVIÇOS EDUCACIONAIS
+			regido pela Legislação aplicável e pelas cláusulas e condições
+			seguintes:
+			<p />
+			§ 1º - Os serviços educacionais mencionados nessa cláusula
+			correspondem às aulas a serem ministradas em conformidade com o
+			previsto na Legislação de Ensino e no Regimento Interno do
+			Estabelecimento Escolar, sendo obrigatoriamente prestados a toda
+			turma coletivamente, o qual se obriga a prestá-los ao(s) aluno(s)
+			beneficiário(s) indicado(s) na cláusula VIII e acima, não incluídos
+			os facultativos de caráter individual ou de grupo.
+			<p />
+			§ 2º - Os beneficiados estarão sujeitos às normas do Regimento
+			Escolar, à disposição deste Estabelecimento de Ensino cujas
+			determinações integram o presente instrumento para aplicação
+			subsidiária e em casos omissos.
+			<p />
+			§ 3º - Não estão incluídos no presente contrato os serviços especiais
+			de reforço, dependência, capacitação, transportes, eventos festivos,
+			exames especiais e fornecimento de segunda via de documento(s); os
+			opcionais e/ou de uso facultativo para os alunos bem como uniforme,
+			material didático de uso individual e/ou coletivo e obrigatório, que
+			poderão ser objetos de ajuste às partes.
+			<p />
+			§ 4º - Além dos previstos no parágrafo primeiro, a parte contratante
+			poderá pedir via documentação por escrito de forma antecipada algumas
+			documentações expedidas pela parte contratada, tais como: <br />
+			<BLOCKQUOTE>
+				a) Declaração que está cursando na Instituição contratada; <br />
+				b) Declaração que cursou na Instituição contratada; <br /> c)
+				Recibo anual para IRPF; <br /> d) Relatórios descritivos (quando
+				solicitado por autoridades competentes tais como médicos, psicólogos
+				e juízes); <br /> e) Ficha individual e transferência da
+				Instituição contratada, quando do cancelamento de matrícula; <br />
+				f) Não estão inseridos neste instrumento o fornecimento de uniforme
+				por parte da contratada;
+			</BLOCKQUOTE>
+			<p />
+			§ 5º - Os documentos descritos no parágrafo 4 serão entregues à parte
+			contratante somente quando previamente requisitados por escrito, e
+			para cada uma das situações, somente uma via será expedida, a segunda
+			via de quaisquer que seja terá custas de R$ 10,00 (dez reais) cada
+			via.
+			<p />
+			§ 6º - Este contrato tornar-se-á completo e passará a reger este
+			acordo em sua plenitude para todos os meios e fins, a partir da data
+			da efetivação da matrícula do(a) aluno(a).
+			<p />
+			§ 7º - Obrigar-se-á o(a) CONTRATANTE a fornecer, nos prazos
+			pré-estabelecidos pela Escola CONTRATADA, todos os documentos
+			requeridos para a efetivação da matrícula.
+			<p />
+			§ 8º - A matrícula será considerada efetivada mediante apresentação
+			do comprovante de quitação de débitos anteriores e da primeira
+			parcela da anuidade atual; do preenchimento cadastral do aluno;
+			apresentação dos documentos hábeis e assinatura do presente contrato.
+			<p />
+			§ 9º - É de inteira responsabilidade da CONTRATADA o planejamento e
+			apresentação educacional, objetivo do presente instrumento, no que se
+			refere a marcação de datas para avaliação de aproveitamento, fixação
+			de carga horária, designação de professores, orientação
+			didático-pedagógica e educacional bem como todas as demais
+			providências que as atividades escolares exigem obedecendo ao seu
+			exclusivo critério.
+			<p />
+			§ 10º - As aulas serão ministradas em salas de aula ou em locais em
+			que a CONTRATADA indicar, tendo em vista a natureza do conteúdo e da
+			técnica pedagógica que se fizer necessária.
+			<p />
+			§ 11º – O CONTRATANTE submete-se ao Regime Escolar e Regimento
+			Interno da CONTRATADA e das demais obrigações constantes da
+			Legislação aplicável a área de ensino e, ainda de outras fontes
+			legais que regulamentam supletivamente a matéria.
+			<p />
+			§ 12º - No ato da matrícula será entregue a lista de materiais
+			didáticos e materiais de uso pessoal da criança, sendo que se por
+			algum motivo houver desistência ou transferência, todos os materiais
+			entregues serão devolvidos, porém, após haver iniciado as aulas,
+			esses materiais serão devolvidos proporcionalmente ao que foi usado
+			na Escola.
+			<p />
+			§ 14º - O/a CONTRATANTE obriga-se a comunicar à contratada mudança de
+			endereço e/ou telefone, quando houver.
+			<p />
+			§ 15º - O/a CONTRATANTE compromete-se a trazer o aluno devidamente
+			uniformizado e vir busca-lo, pessoalmente ou quem indicar mediante
+			apresentação da carteira do(a) aluno(a), no local da prestação dos
+			serviços e no horário pré-estabelecido para início e término das
+			atividades letivas diárias(encerramento da aula).
+			<p />
+			§ 16º - O/a CONTRATANTE compromete-se ainda a identificar com o nome,
+			série, turno e turma do aluno, TODOS os materiais de uso pessoal
+			como: uniforme, escova dental, copo, etc, para evitar que o mesmo
+			troque com os coleguinhas.
+			<p />
+			§ 17º - Caso ocorra atraso do CONTRATANTE no horário de vir buscar o
+			filho sujeitará o CONTRATANTE ao pagamento de horas extras do
+			assistente de alunos, cujo valor será devidamente cobrado em
+			carnê/boleto próprio.
+			<p />
+			<p />
+			<p />
+			<p />
+			<div id="rodaPe">
+				____________________________________ <BR /> Assinatura do
+				Responsável
+				<DIV style="text-align: right; margin-left: 70%;">
+					Crescendo em graça e conhecimento.<BR />
+					Lucas 2:52
+				</DIV>
+			</div>
+			<div style="page-break-after: always;"></div>
+
+			<div id="cabecalho">
+				<div id="logo">
+					<img src="resources/img/philadelphia.png" width="140" height="60" />
+				</div>
+				<div id="txtCabecalho">
+					<H2>ESCOLA EVANGÉLICA PHILADELPHIA</H2>
+					<BR />
+					<H3>
+						Crescendo em graça e conhecimento<BR /> Rua: José Aleixo – 3125,
+						Cambará<BR /> Boa Vista – Roraima<BR /> (095) 3626 – 3706<BR />
+						CNPJ: 00.604.243/0001 – 39<BR /> Parecer do CME/BV: 08/2011<BR />
+					</H3>
+				</div>
+			</div>
+			CLAUSULA SEGUNDA – Pelos serviços educacionais referidos na CLÁUSULA
+			1ª, o(a) CONTRATANTE pagará a CONTRATADA no ano corrente uma ANUIDADE
+			ESCOLAR cujo valor acha-se previsto na cláusula sétima deste
+			documento, que poderá ser dividida em 12 parcelas a serem pagas nas
+			datas pré-estabelecidas neste instrumento.
+			<p />
+			§ 1º - A seu critério quando julgar conveniente, em atendimento
+			individual, o Estabelecimento de Ensino poderá dividir o valor das
+			parcelas iniciais ou diluí-la no todo ou em parte, para pagamento
+			juntamente com algumas parcelas posteriores, fazendo constar em
+			recibo, as respectivas importâncias.
+			<p />
+			§ 2º - A primeira parcela será paga no ato da matrícula, sendo
+			imprescindível sua quitação para celebração e quitação do contrato,
+			tendo o caráter de sinal, ARRAS e princípio de pagamento e em caso de
+			desistência pelo(a) CONTRATANTE será devolvido 80% do valor pago até
+			o início das aulas, após, considera-se dever do contratante enviar
+			seu filho à escola.
+			<p />
+			§ 3º - As 12 parcelas deverão ser pagas sucessivamente mensalmente a
+			partir de Janeiro ou no ato da matrícula conforme ocorrer, com
+			vencimento no dia 05 (cinco) de cada mês.
+			<p />
+			§ 4º - Havendo atraso de pagamento com prazo superior ao mencionado
+			no parágrafo anterior, o CONTRATANTE pagará além do valor principal
+			1% (um por cento) ao mês de juros de mora acima do valor da parcela,
+			mais multa de 2% (dois por cento) ao mês. a) Ultrapassados 30 dias do
+			vencimento será encaminhado para cobrança judicial e cadastro nos
+			órgãos de proteção ao crédito.
+			<p />
+			§ 5º - Caso haja atraso referente ao ano anterior, a quitação se fará
+			com base no valor corrigido de acordo com o § 4º, cláusula segunda.
+			<p />
+			§ 6º - O pagamento da mensalidade deverá ser feito na secretaria da
+			Escola através de um carnê/boleto que será fornecido por esta
+			Instituição de Ensino.
+			<p />
+			<p />
+			CLÁUSULA TERCEIRA – Havendo atraso de pagamento de mensalidade(s) em
+			um prazo superior a 30 (trinta) dias, a contratada poderá, desde já,
+			assim proceder:
+			<BLOCKQUOTE>
+				a) Enviar para inclusão do nome dos responsáveis no Serviço de
+				Cadastro de Proteção ao Crédito – SCPC/SERASA; <BR />b) Emitir
+				contra o CONTRATANTE os títulos de créditos cabíveis; <BR />c)
+				Efetuar cobrança pelos meios previstos na Legislação comum;<BR />
+				d) Recusar a renovação da matrícula para o período letivo seguinte;<BR />
+				e) Promover protestos da dívida mediante nota promissória ou
+				semelhante;
+			</BLOCKQUOTE>
+			<p />
+			CLÁUSULA QUARTA – O pagamento das parcelas intransferíveis a outrem,
+			deverá ser efetuada até o dia 5 (cinco) de cada mês.
+			<p />
+			CLÁUSULA QUINTA – A transferência, o cancelamento e a desistência da
+			matrícula deverão ser requeridos por escrito.
+			<p />
+			CLÁUSULA SEXTA – O CONTRATANTE que, por algum motivo particular,
+			desligar o aluno sem haver uma comunicação prévia por escrito à
+			CONTRATADA, a vaga referente ao(a) aluno(a) indicado neste
+			instrumento, ficará à sua disposição e a(s) mensalidade(s)
+			referente(s) ao período que a vaga fica à disposição, deverá(ão) ser
+			paga(s) normalmente até a comunicação por escrito do desligamento
+			pelo contratante à CONTRATADA.
+			<p />
+			CLÁUSULA SÉTIMA – O valor da anuidade/contribuição escolar deste ano
+			será: 
+
+				<TABLE style="border: 1px solid black; border-collapse: collapse; 
+				width: 100%; text-align: center;">
+				<TR class="txtPqno" id="txtPqno">
+					<TD>01 Valor da anuidade </TD>
+					<TD>02 Quantidade de parcelas</TD> 
+					<TD>03 Valor das parcelas</TD>
+				</TR>
+				<TR style="border-left: 1px solid black;">
+					<TD><p:outputLabel value="#{alunoService.aluno.turma.serie.valorAnuidade}"><f:convertNumber pattern="#00.00" /></p:outputLabel> </TD>
+					<TD><p:outputLabel value="12"/></TD> 
+					<TD><p:outputLabel value="#{alunoService.valorMensalidade}"><f:convertNumber pattern="#00.00" /></p:outputLabel></TD>
+				</TR>
+				</TABLE> 
+				Valores expressos na moeda corrente neste país (Brasil).
+			<p />
+			§ 1º - O valor da anuidade prevista nesta cláusula será corrigido em
+			conformidade com a Legislação aplicável num prazo por ela previsto.
+			<p />
+			CLÁUSULA OITAVA – Serão beneficiados pelo presente contrato somente o
+			aluno regularmente matriculado nesta Instituição de Ensino.
+			<p />
+			CLAUSULA NONA – O/a CONTRATANTE assume a total responsabilidade por
+			eventuais débitos existentes relativos ao(a) aluno(a) no preâmbulo
+			deste instrumento.
+			<p />
+			CLÁUSULA DÉCIMA – A CONTRATADA reserva-se o direito de cancelar o
+			contrato e a matrícula, bem como de não firmá-lo para o período
+			letivo seguinte, expedindo a transferência do aluno por motivo
+			disciplinar ou incompatibilidade com o Regimento da Escola, bem como
+			no caso de divergência ou conflito entre os CONTRATANTES.
+			<p />
+			CLÁUSULA DÉCIMA-PRIMEIRA – DAS ALTERAÇÕES CONTRATUAIS
+			<p />
+			§ 1º - Qualquer alteração(ões) que se fizer(em) necessária(s) neste
+			instrumento particular, se fará mediante Termo Aditivo com mútuo
+			consentimento das partes.
+			<p />
+			CLÁUSULA DÉCIMA-SEGUNDA – O presente contrato se extingue em 31 de
+			Dezembro deste ano podendo, no entanto, anteceder essa extinção nas
+			seguintes situações:
+			<BLOCKQUOTE>
+				a) Pelo contratante, por desistência do(a) aluno(a), transferência
+				mediante requerimento protocolado, observando que a(o) CONTRATANTE
+				não tenha pagamento(s) das prestações dos serviços efetuados pela
+				CONTRATADA em atraso.<BR /> b) Pela contratada, através do
+				desligamento do contratante, por deliberação do conselho de classe
+				diante de quebras de normas disciplinares ou por falta de
+				aproveitamento escolar do aluno;<BR /> c) Por quaisquer das partes,
+				pelo não cumprimento do Regime Escolar e o Regime Interno da
+				Contratada ou quebra das cláusulas contratuais.
+			</BLOCKQUOTE>
+			<p />
+			CLÁUSULA DÉCIMA-TERCEIRA – DO FORO § 1 º - As partes elegem o foro da
+			comarca de Boa Vista – RR para dirimir quaisquer dúvidas ou
+			controvérsias oriundas desse contrato com renúncia expressa de
+			qualquer outro, ainda que mais privilegiado. <BR />Por estarem assim justas
+			e contratadas, assinam o presente Contrato para que produza os
+			efeitos de direito.
+			<div id="rodaPe">
+				____________________________________ <BR /> Assinatura do
+				Responsável
+				<DIV style="text-align: right; margin-left: 70%;">
+					Crescendo em graça e conhecimento.<BR />
+					Lucas 2:52
+				</DIV>
+			</div>
+
+		</div>
+
+ -->
+	</div>
+</h:body>
+</html>
+

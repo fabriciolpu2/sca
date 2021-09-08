@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<title>Carnê</title>
+	<h:outputStylesheet library="css" name="carne.css" />
+</h:head>
+	 	
+<h:body >
+
+
+
+	<f:metadata>
+		<o:viewParam name="id" value="#{carneService.carne}" />
+	</f:metadata>
+	<div id="folhaA4" style="height: 950px;">
+	<div style="border:1px; border-style:dashed; height: 300px; border-left: none; border-right: none;"  >
+	
+	
+	<h:form id="fm">
+		<div class="impressao" id="printer" >
+			<div id="carne1">
+				<TABLE border="1" class="tabelaDados">
+					<TR>
+						<TD rowspan="6" colspan="3">
+							<H2>ESCOLA EVANGÉLICA PHILADELPHIA</H2>
+							<H3>
+								Crescendo em graça e conhecimento<BR /> Rua: José Aleixo –
+								3125, Cambará<BR /> Boa Vista – Roraima<BR /> (095) 3626 –
+								3706<BR /> <SPAN style="text-align: right; margin-left: 120px;">Pagar
+									na própria Escola</SPAN>
+							</H3>
+						</TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq">Nosso Numero</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white; font-size: 6px; height: 4px;"
+							class="txtPq" id="txtPq" width="15px"></TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq">Parcela Nº</TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq">Vencimento</TD>
+					</TR>
+					<TR style="font-size: 12px; height: 20px; max-height: 20px;">
+						<TD style="font-size: 11px;"><STRONG>1100540/23431742
+								– P</STRONG></TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD style="font-size: 12px;"><p:outputLabel
+								value="#{carneService.carne.numParcela}" /></TD>
+
+						<TD style="font-size: 12px;"><p:outputLabel
+								value="#{carneService.carne.vencimentoParcela}">
+								<f:convertDateTime pattern="dd | MM | yyyy" />
+							</p:outputLabel></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="1" style="height: 4px;">Série</TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq"></TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq" width="90px">Série</TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq" width="120px">Nosso Número</TD>
+
+					</TR>
+					<TR class="txtG" id="txtG">
+						<TD colspan="1" style="font-size: 12px; height: 20px;"><p:outputLabel
+								value="#{carneService.carne.aluno.turma.serie.nome}" /></TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="1" style="font-size: 12px; height: 20px;"><p:outputLabel
+								value="#{carneService.carne.aluno.turma.serie.nome}" /></TD>
+						<TD rowspan="3"><STRONG>1100540/23431742 – P</STRONG></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="1" style="height: 4px;">Turno</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="1" style="height: 4px;">Turno</TD>
+					</TR>
+					<TR class="txtG" id="txtG">
+						<TD style="font-size: 12px; height: 10px;"><p:outputLabel
+								value="#{carneService.carne.aluno.turma.turno}" /></TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="1" style="font-size: 12px;"><p:outputLabel
+								value="#{carneService.carne.aluno.turma.turno}" /></TD>
+					</TR>
+
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="3">Nome</TD>
+						<TD>CPF</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2">Aluno</TD>
+					</TR>
+					<TR class="txtG" id="txtG">
+						<TD colspan="3" style="font-size: 12px;"><p:outputLabel
+								value="#{carneService.carne.aluno.matriculaResponsavel}"></p:outputLabel>
+						</TD>
+						<TD style="font-size: 12px;" width="120px"><p:outputLabel
+								rendered="#{carneService.carne.aluno.responsavel.grauParentesco == 1}"
+								value="#{carneService.carne.aluno.mae.cpf}"></p:outputLabel> <p:outputLabel
+								rendered="#{carneService.carne.aluno.responsavel.grauParentesco == 2}"
+								value="#{carneService.carne.aluno.pai.cpf}"></p:outputLabel> <p:outputLabel
+								rendered="#{carneService.carne.aluno.responsavel.grauParentesco == 3}"
+								value="#{carneService.carne.aluno.responsavel.cpf}">
+							</p:outputLabel></TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2" style="font-size: 12px;"><p:outputLabel
+								value="#{carneService.carne.aluno.nome}"></p:outputLabel></TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="1">Especie em moeda</TD>
+						<TD>Nº da Parcela</TD>
+						<TD>Vencimento</TD>
+						<TD>(=)Valor do Documento</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2">(=) Valor do Documento</TD>
+					</TR>
+					<TR class="txtG" id="txtG">
+						<TD colspan="1" style="font-size: 12px;">REAIS</TD>
+						<TD style="font-size: 12px; text-align: center;"><p:outputLabel
+								value="#{carneService.carne.numParcela}" /></TD>
+						<TD style="font-size: 12px; text-align: center;"><p:outputLabel
+								value="#{carneService.carne.vencimentoParcela}">
+								<f:convertDateTime pattern="dd | MM | yyyy" />
+							</p:outputLabel></TD>
+						<TD style="font-size: 12px; text-align: right;"><p:outputLabel
+								value="#{carneService.carne.valorMensalidade}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel></TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2" style="font-size: 12px; text-align: right;">
+							<p:outputLabel value="#{carneService.carne.valorMensalidade}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</TD>
+					</TR>
+					<TR class="txtPqno" id="txtPqno">
+						<TD colspan="4">Outras Informações Aluno(a)</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2">(+) Juros/Multas</TD>
+					</TR>
+					<TR>
+						<TD colspan="4" style="font-size: 12px;"><p:outputLabel
+								value="#{carneService.carne.aluno.nome}"></p:outputLabel></TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2" style="font-size: 12px; text-align: right;">
+							<p:outputLabel value="#{carneService.carne.juros}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</TD>
+					</TR>
+					<TR>
+						<TD colspan="4"
+							style="text-align: right; padding-right: 20px; font-size: 10px;"
+							rowspan="5">Pagamento efetuado até o dia 5 deste mês,
+							desconto de R$ 40,00<BR /> - - - - - - - - - - - - - - - - - - -
+							- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+							- - - - - - - - - - <BR /> Pagamento efetuado do dia 6 até dia
+							10 deste mês, desconto de R$ 20,00<BR /> - - - - - - - - - - - -
+							- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+							- - - - - - - - - - - - - - - - - <BR /> - - - - - - - - - - - -
+							- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+							- - - - - - - - - - - - - - - - - <BR /> Após Vencimento serão
+							cobrados juros de 1% ao mês<BR /> Acrescido de multa de 2% ao
+							mês
+						</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq" colspan="2">(+) Outros Acrécimos</TD>
+					</TR>
+					<TR>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2" style="font-size: 12px; text-align: right;">
+							<p:outputLabel value="00,00">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</TD>
+					</TR>
+					<TR>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq" colspan="2">(-) Desconto</TD>
+					</TR>
+					<TR>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2" style="font-size: 12px; text-align: right;">
+							<p:outputLabel value="#{carneService.carne.valorDesconto}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</TD>
+					</TR>
+					<TR>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD
+							style="border-bottom: 1px solid white; font-size: 7px; height: 4px;"
+							class="txtPq" id="txtPq" colspan="2">(=) Valor Cobrado</TD>
+					</TR>
+					<TR>
+						<TD colspan="4">Após 30 dias vencidos, será encaminhado aos
+							órgãos de proteção ao crédito SCPC/SERASA</TD>
+						<TD
+							style="border-bottom: 1px solid white; border-top: 1px solid white;"></TD>
+						<TD colspan="2" style="font-size: 12px; text-align: right;">
+							<p:outputLabel value="#{carneService.carne.valorFinal}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</TD>
+					</TR>
+				</TABLE>
+			</div>
+		</div>
+
+	</h:form>
+	<p:draggable for="fm" containment="parent"/>
+	<BR />
+	</div>
+	<div id="3" style="border:1px; border-style:dashed; height: 300px; border-left: none; border-right: none; border-top: none;" />
+	</div>
+</h:body>
+</html>
+

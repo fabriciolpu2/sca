@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+	<h:outputStylesheet library="css" name="topo.css" />
+</h:head>
+<body>
+	<h:form>
+		<p:growl id="growl" sticky="true" showDetail="true" />
+
+		<p:wizard flowListener="#{alunoService.onFlowProcess}">
+				<p:tab id="aluno" title="Aluno">
+		<p:panel header="Dados do Aluno">
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<p:outputLabel value="Nome: " />
+				<p:inputText size="30" maxlength="30" value="#{alunoService.aluno.nome}"/>
+				<h:outputLabel value="Sexo: " />
+				<p:selectOneMenu value="#{alunoService.aluno.sexo}"
+					label="Sexo">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+					<f:selectItems value="#{alunoService.sexos}"
+					var="sexo" itemValue="#{sexo}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Data de Nascimento:" />
+				<p:calendar navigator="true" pattern="dd/MM/yyyy" size="12" value="#{alunoService.aluno.dataNasc}" locale="pt_BR"/>
+			</h:panelGrid>
+
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<p:outputLabel value="Naturalidade:" />
+				<p:inputText value="#{alunoService.aluno.naturalidade}" label="Naturalidade"/>
+				<p:outputLabel value="UF:"/>
+				<p:selectOneMenu value="#{alunoService.aluno.siglas}"
+					label="Siglas">
+					<f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
+					<f:selectItems value="#{alunoService.siglas}"
+					var="sexo" itemValue="#{siglas}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="Nacionalidade: " />
+				<p:inputText />
+			</h:panelGrid>
+			<h:panelGrid columns="4" columnClasses="label, value">
+				<p:outputLabel value="Possui Convenio:" />
+				<p:selectBooleanButton offLabel="Não" onLabel="Sim" />
+				<p:outputLabel value="Descrição do Convenio" />
+				<p:inputText label="Descrição do Convenio" />
+
+				<p:outputLabel value="PNE:" />
+				<p:selectBooleanButton offLabel="Não" onLabel="Sim" />
+				<p:outputLabel value="Especificar PNE" />
+				<p:inputText label="Descrição PNE" title="true" size="70" />
+				<p:outputLabel value="Doeça" />
+				<p:selectBooleanButton offLabel="Não" onLabel="Sim" />
+				<p:outputLabel value="Especificar Doença e Cuidados" />
+				<p:inputText label="Descrição Cuidados" title="true" size="70" />
+
+				<p:outputLabel value="Alergia" />
+
+				<p:selectBooleanButton offLabel="Não" onLabel="Sim" />
+				<p:outputLabel value="Especificar Alimentos/Medicamentos" />
+				<p:inputText label="Descrição Cuidados" title="true" size="70" />
+			</h:panelGrid>
+
+		</p:panel>
+	</p:tab>
+
+	<p:tab id="Responsaveis" title="Responsáveis">
+		<p:panel header="Dados dos Responsáveis">
+			<p:messages />
+			<h:panelGrid columns="4" columnClasses="label, value" title="Mae">
+				<h:outputText value="Nome da Mãe: " />
+				<p:inputText size="30" label="Nome da Mãe" />
+				<h:outputText value="Nome do Pai: " />
+				<p:inputText size="30" label="Nome do Pai" />
+			</h:panelGrid>
+			<h:panelGrid columns="4" columnClasses="label, value">
+				<h:outputLabel value="Aluno Mora com:" />
+				<p:selectOneMenu id="moraCom">
+					<f:selectItem itemLabel="Pai e Mae" itemValue="Pai e Mae" />
+					<f:selectItem itemLabel="Pai" itemValue="Pai" />
+					<f:selectItem itemLabel="Mãe" itemValue="Mãe" />
+					<f:selectItem itemLabel="Outro" itemValue="Outro" />
+				</p:selectOneMenu>
+				<h:outputLabel value="Os documentos a seguir pertencem a: " />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="Pai" itemValue="Pai" />
+					<f:selectItem itemLabel="Mãe" itemValue="Mãe" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<h:outputLabel value="CPF" />
+				<p:inputMask mask="999.999.999-99" size="15" />
+				<h:outputLabel value="RG " />
+				<p:inputMask mask="9999999999" size="11" />
+
+				<h:outputText value="UF" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="SSP" itemValue="SSP" />
+					<f:selectItem itemLabel="PF" itemValue="PF" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<p:outputLabel value="Profissão" />
+				<p:inputText size="25" maxlength="25" />
+				<p:outputLabel value="Local de Trabalho" />
+				<p:inputText size="25" maxlength="25" />
+			</h:panelGrid>
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<p:outputLabel value="Telefone 1" />
+				<p:inputMask mask="(99)99999-9999" size="15" />
+
+				<p:outputLabel value="Telefone 2" />
+				<p:inputMask mask="(99)99999-9999" size="15" />
+
+				<p:outputLabel value="Telefone do Trabalho" />
+				<p:inputMask mask="(99)99999-9999" size="15" />
+			</h:panelGrid>
+		</p:panel>
+	</p:tab>
+	
+	<p:tab id="Endereco" title="Endereço">
+		<p:panel header="Dados Endereço">
+			<p:messages />
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<h:outputText value="Logradouro: " />
+				<p:inputText size="30"
+					label="Logradouro" />
+				<h:outputText value="Nº " />
+				<p:inputText size="5" maxlength="5" label="Numero" />
+				<h:outputText value="CEP: " />
+				<p:inputMask mask="99.999-999" size="15" />
+				<h:outputText value="Bairro: " />
+				<p:inputText />
+				<h:outputText value="Cidade: " />
+				<p:inputText />
+				<h:outputText value="UF: " />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="RR" itemValue="RR"></f:selectItem>
+					<f:selectItem itemLabel="AM" itemValue="AM"></f:selectItem>
+					<f:selectItem itemLabel="MA" itemValue="MA"></f:selectItem>
+				</p:selectOneMenu>
+				<h:outputLabel value="Tipo da Residencia" />
+				<p:selectOneMenu>
+					<f:selectItem itemLabel="Propria" itemValue="Propria" />
+					<f:selectItem itemLabel="Alugada" itemValue="Alugada" />
+					<f:selectItem itemLabel="Cedida" itemValue="Cedida" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+		</p:panel>
+	</p:tab>
+	<p:tab id="dadosFamilia" title="Dados Familiares">
+		<p:panel header="Dados da Família">
+			<p:messages />
+			<h:panelGrid columns="6" columnClasses="label, value" title="Familia">
+				<h:outputText value="Renda Familiar R$ " />
+				<p:inputText></p:inputText>
+				<h:outputLabel value="Irmãos Menores" />
+				<p:spinner size="3" />
+
+				
+				<!-- http://zip.net/blrwH3 -->
+			</h:panelGrid>
+		</p:panel>
+	</p:tab>
+
+	
+		<p:tab id="turma" title="Turma">
+		<p:panel header="Turma">
+			<p:messages />
+			<h:panelGrid columns="6" columnClasses="label, value">
+				<h:outputText value="Turma: " />
+				<p:inputText size="30" />
+			</h:panelGrid>				
+		</p:panel>
+	</p:tab>
+			
+		</p:wizard>
+	</h:form>
+</body>
+</html>

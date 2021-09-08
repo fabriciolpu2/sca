@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  	<title>Login</title>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="resources/css/style.css"> 
+    <meta name="viewport" content="width=device-width"/>
+  </head>
+  <body>
+  	<header>
+        <nav class="nav navbar-fixed-top top">
+			<div class="navbar-header">
+				<img src="img/brand.png" />
+			</div>
+            <div class="navbar-right right">
+            	<img src="img/top_philadelphia.png" />
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="login-card">
+                    <h1>Login</h1>
+                    <h:form>
+                       <h:messages id="messages" />
+                       <h:inputText type="text" name="user" placeholder="Nome do usuário" value="#{loginService.usuario.nomeUsuario}"/>
+                       <h:inputText type="password" name="pass" placeholder="Senha" value="#{loginService.usuario.senha}"/>
+                       	<h:commandButton value="Logar" action="#{loginService.envia}" ajax="false" />
+                    </h:form>     
+                    <div class="login-help">
+                        <a href="#">Registre-se</a> • <a href="#">Esqueceu a senha?</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+  </body>
+  <footer>
+  	<div class="container-fluid">
+    	<div class="row">
+            SGE Sistemas</br>
+            Copyright Fabricio & Akyama
+        </div>
+    </div>
+  </footer>
+</html>

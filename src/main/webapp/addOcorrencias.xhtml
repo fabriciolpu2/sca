@@ -1,0 +1,83 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<title>Aluno</title>
+	<h:outputStylesheet library="css" name="layout.css" />
+	<h:outputScript library="js" name="pt_BR.js" />
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo">
+
+			<f:metadata>
+				<o:viewParam name="id" value="#{alunoService.aluno}"/>		
+			</f:metadata>
+
+			<h:form id="form" target="_blank">
+			<p:panel header="Ocorrências" style="height:500px" id="pnl">
+				<p:growl id="salvarMsg" sticky="true" showDetail="true" />
+				<p:outputLabel value="Registro de Ocorrencias do Aluno: #{alunoService.aluno.nome}" />
+				<BR/>
+				<p:panelGrid columns="3" styleClass="panelGrid">					
+					<p:outputLabel value="Data de Registro:" />
+					<p:outputLabel value="Descrição: " />				
+					<p:outputLabel value="Aluno: "/>	
+					
+					<p:calendar navigator="true" mask="99/99/9999"
+									pattern="dd/MM/yyyy" size="12"
+									value="#{ocorrenciaService.ocorrencia.dataDeRegistro}" locale="pt_BR" />
+					<p:inputTextarea value="#{ocorrenciaService.ocorrencia.descricao}" maxlength="100" cols="40"/>					
+					<p:selectOneMenu value="#{ocorrenciaService.ocorrencia.aluno}" style="width:140px;" >
+						<f:selectItem itemValue="#{alunoService.aluno}" itemLabel="#{alunoService.aluno.nome}" />
+					</p:selectOneMenu>
+					
+					
+					<p:commandButton value="Salvar" action="#{ocorrenciaService.salvar}"
+						update="salvarMsg" icon="ui-icon-disk" style="font-size:14px" />
+					
+				</p:panelGrid>
+				<BR/>
+				<BR/>
+				<p:separator title="Registros"></p:separator>
+				<p:dataTable value="#{alunoService.aluno.ocorrencias}" 
+				var="ocorrencia" id="tbOcorrencia" selectionMode="single"
+					selection="#{ocorrenciaService.ocorrenciaSelecionada}"
+					rowKey="#{ocorrencia.id}">
+					
+					<p:ajax event="rowSelect" update=":form:pnl"
+						listener="#{ocorrenciaService.onRowSelect}" />
+					
+					<p:column headerText="ID" width="5%">#{ocorrencia.id}</p:column>
+					<p:column headerText="Data" width="15%"><p:outputLabel value="#{ocorrencia.dataDeRegistro}"> <f:convertDateTime pattern="dd/MM/yyyy" /></p:outputLabel></p:column>
+					<p:column headerText="Descrição">#{ocorrencia.descricao}</p:column>
+					<p:column headerText="Aluno"><p:outputLabel value="#{ocorrencia.aluno.nome}"/></p:column>
+					
+					<p:column headerText="Ação" width="10%">
+						<p:commandButton icon="ui-icon-trash"
+							update="form:pnl"
+							action="#{ocorrenciaService.remover}">
+							<f:setPropertyActionListener
+								target="#{ocorrenciaService.ocorrenciaSelecionada}"
+								value="#{ocorrencia}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>								
+				</p:panel>		
+								
+											
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
+
+

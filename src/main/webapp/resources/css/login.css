@@ -1,0 +1,18 @@
+@charset "utf-8";
+@font-face {
+font-family: ubuntuRegular;
+src: url("./font/Ubuntu-R.ttf") format('truetype')
+}
+
+body {
+}
+#login {	
+	color:#000;
+	font-size:15px;
+	margin-left:35%;
+	margin-top:20%;
+}
+.panelGrid.ui-panelgrid>*>tr,
+.panelGrid.ui-panelgrid>*>tr>td {
+    border: none;
+}

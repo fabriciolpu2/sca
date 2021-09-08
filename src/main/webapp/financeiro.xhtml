@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+<h:head>
+	<title>Aluno</title>
+	<h:outputStylesheet library="css" name="layout.css" />
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo">
+		
+		<f:metadata>				
+				<f:viewAction action="#{carneService.findAll}"></f:viewAction>
+			</f:metadata>
+			
+
+			<h:form id="form" target="_blank">
+				<p:panel header="Mensalidades" style="height:500px" id="pnl">
+					<p:growl id="salvarMsg" sticky="true" showDetail="true" />
+					<p:separator title="Registros"></p:separator>
+					<p:dataTable value="#{carneService.carnes}" var="carne" tableStyle="font-size:11px;text-align: center; "
+						id="tbCarne" selectionMode="single" selection="#{carneService.carneSelecionado}"
+					rowKey="#{carne.id}"
+					scrollRows="15" scrollable="true" liveScroll="true" scrollHeight="360" style="margin-bottom:0">
+
+					<p:ajax event="rowSelect" update=":form:pnl"
+						listener="#{carneService.onRowSelect}" />
+						<p:column headerText="Aluno" sortBy="#{carne.aluno.nome}" filterBy="#{carne.aluno.nome}" width="15%">
+							<p:outputLabel value="#{carne.aluno.nome}">								
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Turma" sortBy="#{carne.aluno.turma.nome}" filterBy="#{carne.aluno.turma.nome}" width="12%">
+							<p:outputLabel value="#{carne.aluno.turma.nome}">								
+							</p:outputLabel>
+						</p:column>
+						
+						<p:column headerText="Pago" width="5%" sortBy="#{carne.pago}">
+						<p:graphicImage value="/resources/img/check.png" rendered="#{carne.pago == true}" height="25px"/> 
+						<p:graphicImage value="/resources/img/x.png" rendered="#{carne.pago == false}" height="15px"/>
+						
+						</p:column>
+						<p:column headerText="Nº Parcela" sortBy="#{carne.numParcela}" width="8%">#{carne.numParcela}</p:column>
+						<p:column headerText="Data de Pagamento" sortBy="#{carne.dataPagamento}">
+							<p:outputLabel value="#{carne.dataPagamento}" >
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+						</p:column>
+
+						
+						<p:column headerText="Data Vencimento">
+							<p:outputLabel value="#{carne.vencimentoParcela}">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:outputLabel>
+						</p:column>
+						
+						<p:column headerText="Valor Mensalidade">R$	
+						<p:outputLabel value="#{carne.valorMensalidade}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Desconto"  width="8%">
+							<p:outputLabel value="#{carne.valorDesconto}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Juros"  width="8%">
+							<p:outputLabel value="#{carne.juros}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</p:column>
+						<p:column headerText="Valor Pago" width="8%">
+							<p:outputLabel value="#{carne.valorFinal}">
+								<f:convertNumber pattern="#00.00" />
+							</p:outputLabel>
+						</p:column>		
+						<p:column headerText="Ação" width="10%">
+													
+							<p:button icon="ui-icon-contact" title="Carnê" outcome="carne"
+								target="_blank">
+								<f:param name="id" value="#{carne.id}" />
+							</p:button>	
+							<p:button icon="ui-icon-pencil" title="Editar" outcome="addCarne" target="_blank">
+								<f:param name="id" value="#{carne.aluno.id}"/>
+						</p:button>																			
+						</p:column>									
+					</p:dataTable>
+				</p:panel>
+			</h:form>
+			
+			
+		</div>
+		
+	</div>
+</h:body>
+</html>
+

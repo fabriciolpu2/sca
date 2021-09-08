@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro e Consulta de Série</title>
+	<h:outputStylesheet library="css" name="layout.css" />
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo">
+
+			<f:metadata>
+				<f:viewAction action="#{serieService.findAll}"></f:viewAction>
+			</f:metadata>
+
+			<h:form id="formSerie">
+				<p:growl id="serieMsg" sticky="true" showDetail="true" />
+				<p:panel header="Gerenciar Series" id="panelSerie"
+					style="width:100%">
+					<h:panelGrid columns="2" columnClasses="label, value"
+						style="font-size:14px">
+						<p:outputLabel value="Nome da Serie: " />
+						<p:outputLabel value="Valor Anuidade:" />
+
+						<p:inputText value="#{serieService.serie.nome}" />
+						<p:inputText value="#{serieService.serie.valorAnuidade}" size="15"
+							maxlength="10" />
+					</h:panelGrid>
+					<br />
+					<p:commandButton value="Salvar" action="#{serieService.salvar}"
+						update=":formSerie:serieMsg" icon="ui-icon-disk" style="font-size:14px"/>
+					<br />
+				</p:panel>
+				<br />
+				<p:dataTable style="width:100%" value="#{serieService.series}"
+					tableStyle="font-size:14px" var="serieVar" id="tbSerie"
+					paginator="true" rows="10" rowsPerPageTemplate="10,15,20"
+					selectionMode="single" selection="#{serieService.serieSelecionada}"
+					rowKey="#{serieVar.id}" >
+
+					<p:ajax event="rowSelect" update=":formSerie:panelSerie"
+						listener="#{serieService.onRowSelect}" />
+					<p:column headerText="Id" width="10%" sortBy="#{serieVar.id}">#{serieVar.id}</p:column>
+					<p:column headerText="Serie" width="40%" sortBy="#{serieVar.nome}">#{serieVar.nome}</p:column>
+					<p:column headerText="Valor da Anuidade" width="40%" sortBy="#{serieVar.valorAnuidade}">#{serieVar.valorAnuidade}</p:column>					
+					<p:column headerText="Ação" width="10%">
+						<p:commandButton icon="ui-icon-trash"
+							update="formSerie:panelSerie" action="#{serieService.remover}">
+							<f:setPropertyActionListener
+								target="#{serieService.serieSelecionada}" value="#{serieVar}" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<BR />
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
+

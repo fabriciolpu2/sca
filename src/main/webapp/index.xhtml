@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+	<h:outputStylesheet library="css" name="layout.css" />
+</h:head>
+	<h:body>		
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo">
+			<f:metadata>
+				
+			</f:metadata>
+			<p:outputLabel> </p:outputLabel>
+								
+				<BR />
+				<!--  Gambiarra muito da boa e funcional -->			
+				<p:dataTable style="width:90%" rendered="false">
+					dd
+				</p:dataTable>
+				<BR />			
+		</div>
+
+	</div>
+	
+	</h:body>
+	
+	<!-- PC -->
+</html>

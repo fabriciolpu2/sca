@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Cadastro de Professor</title>
+	<h:outputStylesheet library="css" name="layout.css" />
+</h:head>
+
+<h:body>
+	<div class="PC">
+		<ui:include src="topo.xhtml"></ui:include>
+		<ui:include src="menu.xhtml"></ui:include>
+		<div id="conteudo">
+			<f:metadata>
+				<f:viewAction action="#{professorService.findAll}"></f:viewAction>
+			</f:metadata>
+
+
+			<h:form id="formSalvar">
+				<p:growl id="salvarMsg" sticky="true" showDetail="true" />
+				<p:panel header="Gerenciar Professores" id="panelSalvar"
+					style="width:100%">
+					<h:panelGrid columns="6" style="font-size:14px">
+
+						<p:outputLabel value="Nome:* " />
+						<p:outputLabel value="CPF:*" />
+						<p:outputLabel value="RG: " />
+						<p:outputLabel value="Emissor: " />
+						<p:outputLabel value="UF:" />
+						<p:outputLabel value="D. Nascimento" />
+
+
+						<p:inputText value="#{professorService.professor.nome}" size="32"
+							maxlength="30" required="true" />
+						<p:inputMask value="#{professorService.professor.cpf}" size="15"
+							mask="999.999.999-99" required="true" />
+						<p:inputText value="#{professorService.professor.rg}"
+							maxlength="10" />
+						<p:inputText value="#{professorService.professor.rgEmissor}"
+							maxlength="15" size="15"/>
+						<p:selectOneMenu value="#{professorService.professor.rgUf}"
+							label="Siglas">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{professorService.siglas}" var="siglas"
+								itemValue="#{siglas}" />
+						</p:selectOneMenu>
+						<p:calendar navigator="true" mask="99/99/9999"
+							pattern="dd/MM/yyyy" size="12"
+							value="#{professorService.professor.dataNasc}" locale="pt_BR" />
+
+					</h:panelGrid>
+					<h:panelGrid columns="6" style="font-size:14px">
+
+
+						<h:outputLabel value="Sexo: " />
+						<p:outputLabel value="Nacionalidade: " />
+						<p:outputLabel value="Naturalidade: " />
+						<p:outputLabel value="UF:" />
+						<p:outputLabel value="Telefone:" />
+						<p:outputLabel value="Celular:" />
+
+
+						<p:selectOneMenu value="#{professorService.professor.sexo}"
+							label="Sexo">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{professorService.sexos}" var="sexo"
+								itemValue="#{sexo}" />
+						</p:selectOneMenu>
+						<p:inputText value="#{professorService.professor.nacionalidade}"
+							size="15" />
+						<p:inputText value="#{professorService.professor.naturalidade}" />
+						<p:selectOneMenu value="#{professorService.professor.uf}"
+							label="Siglas">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{professorService.siglas}" var="siglas"
+								itemValue="#{siglas}" />
+						</p:selectOneMenu>
+						<p:inputMask value="#{professorService.professor.telefoneRes}"
+							mask="(99)9999-9999" size="15" />
+						<p:inputMask value="#{professorService.professor.celular}"
+							mask="(99)99999-9999" size="15" />
+
+					</h:panelGrid>
+
+					<BR />
+
+					<!-- Endereco -->
+					<h:panelGrid columns="3" style="font-size:14px">
+						<p:outputLabel value="Logradouro:" />
+						<p:outputLabel value="Nº " />
+						<p:outputLabel value="CEP: " />
+
+
+						<p:inputText
+							value="#{professorService.professor.endereco.logradouro}" />
+						<p:inputText
+							value="#{professorService.professor.endereco.numeroCasa}"
+							size="5" maxlength="5" label="Numero" />
+						<p:inputMask value="#{professorService.professor.endereco.cep}"
+							mask="99.999-999" size="15" />
+
+
+						<p:outputLabel value="Bairro: " />
+						<p:outputLabel value="Cidade: " />
+						<p:outputLabel value="UF: " />
+
+						<p:inputText value="#{professorService.professor.endereco.bairro}" />
+						<p:inputText value="#{professorService.professor.endereco.cidade}" />
+						<p:selectOneMenu
+							value="#{professorService.professor.endereco.enderecoUf}"
+							label="Siglas">
+							<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+							<f:selectItems value="#{professorService.siglas}" var="siglas"
+								itemValue="#{siglas}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+
+
+					<BR />
+					<p:commandButton value="Salvar" action="#{professorService.salvar}"
+						update="salvarMsg" icon="ui-icon-disk" style="font-size:14px" />
+
+				</p:panel>
+				<BR />
+				<p:dataTable style="width:100%"
+					value="#{professorService.professores}" var="profVar"
+					tableStyle="font-size:14px" id="tbProfessor" paginator="true"
+					rows="10" rowsPerPageTemplate="10,15,20" selectionMode="single"
+					selection="#{professorService.professorSelecionado}"
+					rowKey="#{profVar.id}">
+
+					<p:ajax event="rowSelect" update=":formSalvar:panelSalvar"
+						listener="#{professorService.onRowSelect}" />
+					<p:column headerText="Id" width="10%"> #{profVar.id}</p:column>
+					<p:column headerText="Nome" width="40%">#{profVar.nome}</p:column>
+					<p:column headerText="CPF" width="40%">#{profVar.cpf}</p:column>
+					<p:column headerText="Ação" width="10%">
+						<p:commandButton icon="ui-icon-trash"
+							update="formSalvar:panelSalvar"
+							action="#{professorService.remover}">
+							<f:setPropertyActionListener
+								target="#{professorService.professorSelecionado}"
+								value="#{profVar}" />
+						</p:commandButton>
+					</p:column>
+				
+				</p:dataTable>
+				<BR />
+			</h:form>
+		</div>
+	</div>
+</h:body>
+</html>
+
