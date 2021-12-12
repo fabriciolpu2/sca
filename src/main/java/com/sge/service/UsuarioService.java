@@ -1,13 +1,18 @@
 package com.sge.service;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.Part;
 
 import org.primefaces.event.SelectEvent;
 
@@ -28,8 +33,42 @@ public class UsuarioService implements Serializable{
 	private Usuario usuarioSelecionado = new Usuario();
 	private LoginService ls;
 	
+	private static final int MAX_SIZE = 2 * 1024 * 1024;
+	private Part arquivo; 
+
+    public void importa() {
+        try {
+            String conteudo = new Scanner(arquivo.getInputStream())
+                .useDelimiter("\\A").next();
+        } catch (IOException e) {
+            // trata o erro
+        }
+    }
+    public void valida(FacesContext context, UIComponent component, Object value) {
+
+        Part arquivo = (Part) value;
+
+        if (arquivo.getSize() > MAX_SIZE) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Arquivo muito grande", "O arquivo deve ter o tamanho máximo de 2mb.");
+            throw new ValidatorException(msg);
+        }
+
+        if (!"text/plain".equals(arquivo.getContentType())) {
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                    "Tipo de arquivo inválido", "O arquivo deve ser do tipo texto.");
+            throw new ValidatorException(msg);
+        }
+    }
+    
 	
 	
+	public Part getArquivo() {
+		return arquivo;
+	}
+	public void setArquivo(Part arquivo) {
+		this.arquivo = arquivo;
+	}
 	public LoginService getLs() {		
 		return ls;
 	}

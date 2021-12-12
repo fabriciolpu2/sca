@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:index.xhtml" PATH="index.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:index.xhtml:0" NAME="item" PATH="index.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT ID="login:#{loginService.Logout}:login.xhtml"
+    NAME="output" PATH="login.xhtml" TARGET="rules:login.xhtml"
+    TITLE="#{loginService.Logout}:login" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT ID="index:#{loginService.envia}:index.xhtml"
+    NAME="output1" PATH="index.xhtml" TARGET="rules:index.xhtml"
+    TITLE="#{loginService.envia}:index" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:login.xhtml" PATH="login.xhtml"
+  SHAPE="256,33,0,0" model-entity="JSFProcessGroup"/>
+</PROCESS>
